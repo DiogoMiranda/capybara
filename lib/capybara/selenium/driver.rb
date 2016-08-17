@@ -33,7 +33,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
     @browser
   end
 
-  def initialize(app, options={})
+  def initialize(app, **options)
     begin
       require 'selenium-webdriver'
       # Fix for selenium-webdriver 3.4.0 which misnamed these
@@ -103,7 +103,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
     unwrap_script_result(result)
   end
 
-  def save_screenshot(path, _options={})
+  def save_screenshot(path, **_options)
     browser.save_screenshot(path)
   end
 
@@ -232,7 +232,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
     browser.switch_to.window(handle) { yield }
   end
 
-  def accept_modal(_type, options={})
+  def accept_modal(_type, **options)
     if headless_chrome?
       insert_modal_handlers(true, options[:with], options[:text])
       yield if block_given?
@@ -247,7 +247,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
     end
   end
 
-  def dismiss_modal(_type, options={})
+  def dismiss_modal(_type, **options)
     if headless_chrome?
       insert_modal_handlers(false, options[:with], options[:text])
       yield if block_given?
@@ -367,24 +367,24 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
     end
   end
 
-  def find_modal(options={})
+  def find_modal(text: nil, **options)
     # Selenium has its own built in wait (2 seconds)for a modal to show up, so this wait is really the minimum time
     # Actual wait time may be longer than specified
     wait = Selenium::WebDriver::Wait.new(
-      timeout: options.fetch(:wait, session_options.default_max_wait_time) || 0 ,
+      timeout: wait || options.fetch(:wait, session_options.default_max_wait_time) || 0 ,
       ignore: Selenium::WebDriver::Error::NoAlertPresentError)
     begin
       wait.until do
         alert = @browser.switch_to.alert
-        regexp = options[:text].is_a?(Regexp) ? options[:text] : Regexp.escape(options[:text].to_s)
+        regexp = text.is_a?(Regexp) ? text : Regexp.escape(text.to_s)
         alert.text.match(regexp) ? alert : nil
       end
     rescue Selenium::WebDriver::Error::TimeOutError
-      raise Capybara::ModalNotFound.new("Unable to find modal dialog#{" with #{options[:text]}" if options[:text]}")
+      raise Capybara::ModalNotFound.new("Unable to find modal dialog#{" with #{text}" if text}")
     end
   end
 
-  def find_headless_modal(options={})
+  def find_headless_modal(text: nil, **options)
     # Selenium has its own built in wait (2 seconds)for a modal to show up, so this wait is really the minimum time
     # Actual wait time may be longer than specified
     wait = Selenium::WebDriver::Wait.new(
@@ -395,11 +395,11 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
         called, alert_text = evaluate_script('window.capybara.current_modal_status()')
         if called
           execute_script('window.capybara.modal_handlers.shift()')
-          regexp = options[:text].is_a?(Regexp) ? options[:text] : Regexp.escape(options[:text].to_s)
+          regexp = text.is_a?(Regexp) ? text : Regexp.escape(text.to_s)
           if alert_text.match(regexp)
             alert_text
           else
-            raise Capybara::ModalNotFound.new("Unable to find modal dialog#{" with #{options[:text]}" if options[:text]}")
+            raise Capybara::ModalNotFound.new("Unable to find modal dialog#{" with #{text}" if text}")
           end
         else
           nil
