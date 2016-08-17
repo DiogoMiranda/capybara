@@ -38,12 +38,7 @@ module Capybara
     # By default, Capybara will try to run webrick.
     #
     def server(&block)
-      if block_given?
-        warn "DEPRECATED: Passing a block to Capybara::server is deprecated, please use Capybara::register_server instead"
-        @server = block
-      else
-        @server
-      end
+      @server
     end
 
     ##
@@ -56,11 +51,7 @@ module Capybara
     # @see register_server
     #
     def server=(name)
-      @server = if name.respond_to? :call
-        name
-      else
-        Capybara.servers[name.to_sym]
-      end
+      @server = Capybara.servers[name.to_sym]
     end
 
     ##
