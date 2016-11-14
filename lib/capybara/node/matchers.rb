@@ -519,7 +519,7 @@ module Capybara
       # @param [String, XPath::Expression] xpath The XPath expression to match against the current code
       # @return [Boolean]
       #
-      def matches_xpath?(xpath, options={}, &optional_filter_block)
+      def matches_xpath?(xpath, **options, &optional_filter_block)
         matches_selector?(:xpath, xpath, options, &optional_filter_block)
       end
 
@@ -530,7 +530,7 @@ module Capybara
       # @param [String] css The CSS selector to match against the current code
       # @return [Boolean]
       #
-      def matches_css?(css, options={}, &optional_filter_block)
+      def matches_css?(css, **options, &optional_filter_block)
         matches_selector?(:css, css, options, &optional_filter_block)
       end
 
@@ -555,7 +555,7 @@ module Capybara
       # @param [String, XPath::Expression] xpath The XPath expression to match against the current code
       # @return [Boolean]
       #
-      def not_matches_xpath?(xpath, options={}, &optional_filter_block)
+      def not_matches_xpath?(xpath, **options, &optional_filter_block)
         not_matches_selector?(:xpath, xpath, options, &optional_filter_block)
       end
 
@@ -566,7 +566,7 @@ module Capybara
       # @param [String] css The CSS selector to match against the current code
       # @return [Boolean]
       #
-      def not_matches_css?(css, options={}, &optional_filter_block)
+      def not_matches_css?(css, **options, &optional_filter_block)
         not_matches_selector?(:css, css, options, &optional_filter_block)
       end
 
