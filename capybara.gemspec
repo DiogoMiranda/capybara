@@ -27,13 +27,14 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("xpath", ["~> 2.0"])
   s.add_runtime_dependency("addressable")
 
-  s.add_development_dependency("selenium-webdriver", [">= 3.0", "< 4.0"])
+  s.add_development_dependency("selenium-webdriver", [">= 3.0", "< 3.3"])
   s.add_development_dependency("sinatra", [">= 1.4.0"])
   s.add_development_dependency("rspec", [">= 3.4.0"])
   s.add_development_dependency("launchy", [">= 2.0.4"])
   s.add_development_dependency("yard", [">= 0.9.0"])
   s.add_development_dependency("fuubar", [">= 1.0.0"])
   s.add_development_dependency("cucumber", [">= 2.3.0"])
+  s.add_development_dependency("minitest")
   s.add_development_dependency("rake")
   s.add_development_dependency("erubi")  # dependency specification needed by rbx
 
