@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("xpath", ["~> 2.0"])
   s.add_runtime_dependency("addressable")
 
-  s.add_development_dependency("selenium-webdriver", [">= 3.0", "< 3.3"])
+  s.add_development_dependency("selenium-webdriver", [">= 3.0", "< 4.0"])
   s.add_development_dependency("sinatra", [">= 1.4.0"])
   s.add_development_dependency("rspec", [">= 3.4.0"])
   s.add_development_dependency("launchy", [">= 2.0.4"])
