@@ -234,7 +234,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
 
   def accept_modal(_type, **options)
     if headless_chrome?
-      insert_modal_handlers(true, options[:with], options[:text])
+      insert_modal_handlers(true, options[:with])
       yield if block_given?
       find_headless_modal(options)
     else
@@ -249,7 +249,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
 
   def dismiss_modal(_type, **options)
     if headless_chrome?
-      insert_modal_handlers(false, options[:with], options[:text])
+      insert_modal_handlers(false, options[:with])
       yield if block_given?
       find_headless_modal(options)
     else
@@ -312,7 +312,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
 
   private
 
-  def insert_modal_handlers(accept, response_text, expected_text=nil)
+  def insert_modal_handlers(accept, response_text)
     script = <<-JS
       if (typeof window.capybara  === 'undefined') {
         window.capybara = {

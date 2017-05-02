@@ -13,7 +13,6 @@ module Capybara
           @expected_text = Capybara::Helpers.normalize_whitespace(@expected_text)
         end
         @search_regexp = Capybara::Helpers.to_regexp(@expected_text, nil, exact?)
-        warn "Unused parameters passed to #{self.class.name} : #{args.to_s}" unless args.empty?
         assert_valid_keys
       end
 

@@ -2,11 +2,11 @@
 module Capybara
   class Selector
     class Filter
-      def initialize(name, block, **options)
+      def initialize(name, block, boolean: false, **options)
         @name = name
         @block = block
         @options = options
-        @options[:valid_values] = [true,false] if options[:boolean]
+        @options[:valid_values] = [true,false] if boolean
       end
 
       def default?
